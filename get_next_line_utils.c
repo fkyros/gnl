@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gade-oli <gade-oli@student.42madrid>       +#+  +:+       +#+        */
+/*   By: gade-oli <gade-oli@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 16:52:16 by gade-oli          #+#    #+#             */
-/*   Updated: 2023/02/20 21:23:01 by gade-oli         ###   ########.fr       */
+/*   Created: 2023/02/20 21:22:07 by gade-oli          #+#    #+#             */
+/*   Updated: 2023/02/20 21:22:37 by gade-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2048
-# endif
-
-char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+	int	found;
 
-#endif
+	i = 0;
+	found = 0;
+	while (!found && s[i])
+	{
+		if (s[i] == (char)c)
+			found = 1;
+		else
+			i++;
+	}
+	if ((char)c == '\0' && s[i] == '\0')
+		found = 1;
+	if (found)
+		return ((char *)(s + i));
+	return (NULL);
+}
