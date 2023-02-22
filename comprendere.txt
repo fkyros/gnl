@@ -61,6 +61,7 @@ enough for us, because as we've seen each time it's already going to be called
 it's going to overwrite the buffer, it's going to transfer the characters it read back into the same buffer,
 so what's going to we have to do already is to recover that, and put it elsewhere to put it
 aside. So for example we can think of creating a variable called "stash",
+
 which can take the form you want actually
 because it's one of the several ways to work on get_next_line,
 I did it in several ways because I did the project several times to practice,
@@ -85,6 +86,7 @@ we call read(), we read 5 bytes, we put that in buffer, we return 5,
 we put that in our stash, and here once again, as with each call,
 we look at what's inside, and there surprise, there is a line break in the characters
 that we read in our file. So what happens in this case, and well obviously
+
 in fact we will want, from the moment we know that we are reaching the end of the line,
 we will want to extract this line from our reserve in order to be able to return it with get_next_line,
 it's the goal of the function, so we may have a variable called line,
@@ -110,6 +112,7 @@ come back with get_next_line, the stash variable is reinitialized because it was
 we sent the line[ on the previous call, and this is where a super interesting notion comes into play,
 which is in fact the static variables. A static variable is a variable that will
 keep its value between two function calls. So there stash was declared in get_next_line,
+
 and when we go to make it static, what will happen when we go back to get_next_line on the
 second pass is that we will have "Go" which will be back, which will be kept. So we
 actually kept everything we read with read(). Because once again we can't go
