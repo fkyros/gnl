@@ -6,7 +6,7 @@
 /*   By: gade-oli <gade-oli@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 16:54:32 by gade-oli          #+#    #+#             */
-/*   Updated: 2023/02/22 20:15:26 by gade-oli         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:43:36 by gade-oli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*gen_line(char *read)
 	if (!line)
 		return (NULL);
 	j = 0;
-	while(j < i)
+	while (j < i)
 	{
 		line[j] = read[j];
 		j++;
@@ -60,31 +60,36 @@ char	*rm_line(char *line)
 	}
 	res[j] = '\0';
 	free(line);
-	return (res);	
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
-	static char		*read;
+	static char		*reading = NULL;
 	char			tmp[BUFFER_SIZE + 1];
 	ssize_t			bytesread;
 	char			*line;
 
+	if (!reading)
+	{
+		reading = malloc(sizeof(char) * 1000);
+		reading[0] = '\0';
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	bytesread = 1;
-	while (!ft_strchr(reading, '\n') && bytesread > 0)
+	while (bytesread > 0 && ft_strchr(reading, '\n') == NULL)
 	{
 		bytesread = read(fd, tmp, BUFFER_SIZE);
 		if (bytesread < 0)
 		{
-			free(read);
+			free(reading);
 			return (NULL);
 		}
 		tmp[bytesread] = '\0';
-		read = ft_strjoin(read, tmp);
+		reading = ft_strjoin(reading, tmp);
 	}
-	line = gen_line(read);
-	read = rm_line(read);
+	line = gen_line(reading);
+	reading = rm_line(reading);
 	return (line);
 }
